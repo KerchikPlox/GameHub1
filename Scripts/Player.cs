@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
     public int lives = 3;
-    [SerializeField] private float jumpForce = 4f;
+    public float jumpForce = 4f;
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask spikes;
     [SerializeField] private bool isGrounded = false;
@@ -52,4 +53,5 @@ public class Player : MonoBehaviour
     {
         rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
+
 }
