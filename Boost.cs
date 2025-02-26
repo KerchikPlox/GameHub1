@@ -13,8 +13,8 @@ public class Boost : MonoBehaviour
     }
     private IEnumerator ReturnJumpForce()
     {
-        Player.instance.jumpForce = 32f;
+        Player.instance.jumpForce = 640f;
         yield return new WaitForSeconds(5f);
-        Player.instance.jumpForce = 16f;
+        Player.instance.jumpForce = 320f;
     }
 }

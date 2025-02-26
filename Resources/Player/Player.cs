@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     public static Player instance;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (Input.GetButton("Horizontal")) Move();
-        if (isGrounded) Jump();
     }
 
     private void Move() 
@@ -47,11 +46,6 @@ public class Player : MonoBehaviour
     private void CheckGround()
     {
         isGrounded = Physics2D.OverlapPoint(groundCheck.position, ground | spikes);
-    }
-
-    private void Jump()
-    {
-        rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
 }
