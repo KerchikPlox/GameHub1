@@ -1,14 +1,42 @@
 using UnityEngine;
 
-public class MovePlatform : MonoBehaviour
+public class MovingPlatform : MonoBehaviour
 {
-    private Vector3 startPos;
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private float distance = 2f;
+    [SerializeField] private float speed = 2f;
+
+    [SerializeField] private Vector3 startPosition;
+    [SerializeField] private bool movingRight = true;
+
+    private void Start()
     {
-        while (transform.position.x < 8)
+        startPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        if (movingRight)
         {
-            transform.position = Vector3.MoveTowards(transform.position, startPos + transform.right * 1, 3 * Time.deltaTime);
+            transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+            if (transform.position.x >= startPosition.x + distance)
+            {
+                movingRight = false;
+            }
+        }
+        else
+        {
+            transform.position -= new Vector3(speed * Time.deltaTime, 0, 0);
+            if (transform.position.x <= startPosition.x - distance)
+            {
+                movingRight = true;
+            }
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject == Player.instance.gameObject && (collision.relativeVelocity.y < -0.2f))
+        {
+            Player.instance.rb.AddForce(transform.up * Player.instance.jumpForce, ForceMode2D.Impulse);
         }
     }
 }

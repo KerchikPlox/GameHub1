@@ -8,23 +8,27 @@ public class Player : MonoBehaviour
     public float jumpForce = 4f;
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask spikes;
-    [SerializeField] private bool isGrounded = false;
     [SerializeField] private Transform groundCheck;
     public int coins = 0;
 
     public static Player instance;
 
     public Rigidbody2D rb;
+    public BoxCollider2D boxCollider;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         instance = this;
     }
     public void Damage()
     {
         lives--;
         Health.health.TakingDamage();
-        Debug.Log(lives);
+        if (lives == 0)
+        {
+            StartCoroutine(Death.instance.Dying());
+        }
     }
     // Update is called once per frame
     void Update()
@@ -36,16 +40,6 @@ public class Player : MonoBehaviour
     {
         Vector3 dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-    }
-
-    private void FixedUpdate()
-    {
-        CheckGround();
-    }
-
-    private void CheckGround()
-    {
-        isGrounded = Physics2D.OverlapPoint(groundCheck.position, ground | spikes);
     }
 
 }

@@ -47,10 +47,12 @@ public class SpawnPlatforms : MonoBehaviour
         if (yPosition == -1) yPosition = highestPlat + Random.Range(minY, maxY);
         float xPosition = Random.Range(minX, maxX);
         RandomizePlat();
+
         if (lastType == 0)
         {
             RandomizeBoost(xPosition, yPosition);
         }
+
         GameObject newPlatform = Instantiate(randomPlat, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
         platforms.Add(newPlatform);
         highestPlat = yPosition;
@@ -69,10 +71,24 @@ public class SpawnPlatforms : MonoBehaviour
     private void RandomizePlat()
     {
         float randomValueForPlat = Random.Range(0f, 100f);
-        if (randomValueForPlat < 16f && lastType != 1)
+
+        if (randomValueForPlat < 30f)
         {
-            randomPlat = platformPrefab[1];
-            lastType = 1;
+            randomPlat = platformPrefab[2];
+            lastType = 2;
+        }
+        else if (randomValueForPlat >= 31f && randomValueForPlat < 44f)
+        {
+            if (lastType == 1)
+            {
+                randomPlat = platformPrefab[0];
+                lastType = 0;
+            }
+            else
+            {
+                randomPlat = platformPrefab[1];
+                lastType = 1;
+            }
         }
         else
         {
@@ -80,6 +96,8 @@ public class SpawnPlatforms : MonoBehaviour
             lastType = 0;
         }
     }
+
+
 
     private void RandomizeBoost(float xPosition, float yPosition)
     {
