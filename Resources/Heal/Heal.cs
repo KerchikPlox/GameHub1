@@ -9,7 +9,6 @@ public class Heal : MonoBehaviour
             if (Player.instance.lives < 3)
             {
                 Player.instance.lives++;
-                Debug.Log(Player.instance.lives);
                 Health.health.Healing();
             }
             else {

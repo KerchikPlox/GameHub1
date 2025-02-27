@@ -35,7 +35,7 @@ public class SpawnPlatforms : MonoBehaviour
     {
         float yPosition = player.position.y;
 
-        for (int i = 0; i < platCount; i++)
+        for (int i = 0; i < platCount - 5; i++)
         {
             yPosition += Random.Range(minY, maxY);
             Spawn(yPosition);
@@ -47,13 +47,11 @@ public class SpawnPlatforms : MonoBehaviour
         if (yPosition == -1) yPosition = highestPlat + Random.Range(minY, maxY);
         float xPosition = Random.Range(minX, maxX);
         RandomizePlat();
-
+        GameObject newPlatform = Instantiate(randomPlat, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
         if (lastType == 0)
         {
             RandomizeBoost(xPosition, yPosition);
         }
-
-        GameObject newPlatform = Instantiate(randomPlat, new Vector3(xPosition, yPosition, 0), Quaternion.identity);
         platforms.Add(newPlatform);
         highestPlat = yPosition;
         Remove();
@@ -72,12 +70,12 @@ public class SpawnPlatforms : MonoBehaviour
     {
         float randomValueForPlat = Random.Range(0f, 100f);
 
-        if (randomValueForPlat < 30f)
+        if (randomValueForPlat < 20f)
         {
             randomPlat = platformPrefab[2];
             lastType = 2;
         }
-        else if (randomValueForPlat >= 31f && randomValueForPlat < 44f)
+        else if (randomValueForPlat >= 21f && randomValueForPlat < 44f)
         {
             if (lastType == 1)
             {
@@ -103,7 +101,7 @@ public class SpawnPlatforms : MonoBehaviour
     {
         float spawningBoost = Random.Range(0f, 100f);
         float randomValueForBoost = Random.Range(0f, 100f);
-        if (spawningBoost > 50f)
+        if (spawningBoost > 65f)
         {
             if (randomValueForBoost < 10f) randomBoost = boosts[2];
             else if (10f < randomValueForBoost && randomValueForBoost < 30f) randomBoost = boosts[1];

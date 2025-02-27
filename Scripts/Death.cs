@@ -17,7 +17,7 @@ public class Death : MonoBehaviour
     {
         if (collision.gameObject == Player.instance.gameObject)
         {
-            Player.instance.rb.AddForce(transform.up * Player.instance.jumpForce, ForceMode2D.Impulse);
+            Player.instance.rb.AddForce(transform.up * 360f, ForceMode2D.Impulse);
             StartCoroutine(Dying());    
         }
     }

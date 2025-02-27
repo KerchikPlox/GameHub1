@@ -8,6 +8,7 @@ public class Boost : MonoBehaviour
         if (collision.gameObject == Player.instance.gameObject)
         {
             Player.instance.StartCoroutine(ReturnJumpForce());
+            BoostBar.boostbar.StartCoroutine(BoostBar.boostbar.DecreaseBar());
             Destroy(gameObject);
         }
     }
