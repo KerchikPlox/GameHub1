@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Boost : MonoBehaviour
@@ -7,15 +6,12 @@ public class Boost : MonoBehaviour
     {
         if (collision.gameObject == Player.instance.gameObject)
         {
-            Player.instance.StartCoroutine(ReturnJumpForce());
+            Player.instance.ActivateBoost();
+
+            BoostBar.boostbar.StopAllCoroutines();
             BoostBar.boostbar.StartCoroutine(BoostBar.boostbar.DecreaseBar());
+
             Destroy(gameObject);
         }
-    }
-    private IEnumerator ReturnJumpForce()
-    {
-        Player.instance.jumpForce = 540f;
-        yield return new WaitForSeconds(5f);
-        Player.instance.jumpForce = 320f;
     }
 }

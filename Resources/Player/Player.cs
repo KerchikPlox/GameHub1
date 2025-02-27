@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask spikes;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Coroutine boostCoroutine;
     public int coins = 0;
 
     public static Player instance;
@@ -41,5 +42,19 @@ public class Player : MonoBehaviour
         Vector3 dir = transform.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
     }
+    public void ActivateBoost()
+    {
+        if (boostCoroutine != null)
+        {
+            StopCoroutine(boostCoroutine);
+        }
+        boostCoroutine = StartCoroutine(ReturnJumpForce());
+    }
 
+    private IEnumerator ReturnJumpForce()
+    {
+        jumpForce = 540f;
+        yield return new WaitForSeconds(5f);
+        jumpForce = 320f;
+    }
 }
