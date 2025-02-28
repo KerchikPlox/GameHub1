@@ -30,6 +30,6 @@ public class Death : MonoBehaviour
         Player.instance.boxCollider.enabled = false;
         FollowPlayer.instance.enabled = false;
         yield return new WaitForSeconds(2.8f);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Game");
     }
 }
