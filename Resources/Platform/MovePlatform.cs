@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField] private float distance = 2f;
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private float distance;
+    [SerializeField] private float speed = 1.5f;
 
     [SerializeField] private Vector3 startPosition;
     [SerializeField] private bool movingRight = true;
@@ -11,6 +11,7 @@ public class MovingPlatform : MonoBehaviour
     private void Start()
     {
         startPosition = transform.position;
+        distance = Random.Range(0.5f, 3f);
     }
 
     private void Update()

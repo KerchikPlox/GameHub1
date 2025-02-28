@@ -9,9 +9,11 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask spikes;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private float moveInput;
     private Coroutine boostCoroutine;
     public int coins = 0;
 
+    public static int control;
     public static Player instance;
 
     public Rigidbody2D rb;
@@ -21,6 +23,11 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        if (control == 3)
+        {
+            joystick.gameObject.SetActive(true);
+        }
+        
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         instance = this;
@@ -43,13 +50,10 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        float moveInput = Input.GetAxis("Horizontal");
-        if (joystick != null) moveInput += joystick.Horizontal;
-
-        if (SystemInfo.supportsGyroscope)
-        {
-            moveInput += Input.acceleration.x;
-        }
+        moveInput = 0;
+        if (control == 1) moveInput = Input.GetAxis("Horizontal");
+        else if (control == 2 && SystemInfo.supportsGyroscope) moveInput = Input.acceleration.x;
+        else if (control == 3) moveInput = joystick.Horizontal;
 
         Vector3 dir = transform.right * moveInput;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
