@@ -9,19 +9,23 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask spikes;
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private Coroutine boostCoroutine;
+    private Coroutine boostCoroutine;
     public int coins = 0;
 
     public static Player instance;
 
     public Rigidbody2D rb;
     public BoxCollider2D boxCollider;
+
+    public Joystick joystick;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         instance = this;
     }
+
     public void Damage()
     {
         lives--;
@@ -31,17 +35,26 @@ public class Player : MonoBehaviour
             StartCoroutine(Death.instance.Dying());
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
-        if (Input.GetButton("Horizontal")) Move();
+        Move();
     }
 
-    private void Move() 
+    private void Move()
     {
-        Vector3 dir = transform.right * Input.GetAxis("Horizontal");
+        float moveInput = Input.GetAxis("Horizontal");
+        if (joystick != null) moveInput += joystick.Horizontal;
+
+        if (SystemInfo.supportsGyroscope)
+        {
+            moveInput += Input.acceleration.x;
+        }
+
+        Vector3 dir = transform.right * moveInput;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
     }
+
     public void ActivateBoost()
     {
         if (boostCoroutine != null)

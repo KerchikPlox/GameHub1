@@ -31,8 +31,15 @@ public class Health : MonoBehaviour
 
     private IEnumerator WaitForAppear()
     {
-        yield return new WaitForSeconds(0.37f);
+        yield return new WaitForSeconds(0.36f);
         hearts[Player.instance.lives - 1].GetComponent<Animator>().SetBool("ToIdle", true);
+        StartCoroutine(ResetBool());
+    }
+
+    private IEnumerator ResetBool()
+    {
+        yield return new WaitForSeconds(0.1f);
+        hearts[Player.instance.lives - 1].GetComponent<Animator>().SetBool("ToIdle", false);
         hearts[Player.instance.lives - 1].GetComponent<Animator>().SetBool("Appear", false);
         hearts[Player.instance.lives].GetComponent<Animator>().SetBool("Destroy", false);
     }
